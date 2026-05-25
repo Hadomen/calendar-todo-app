@@ -17,7 +17,7 @@ WebアプリケーションのTODOアプリ開発プロジェクト。
 - **ビルドツール**: Gradle
 - **テスト**: JUnit 5
 - **DB**: PostgreSQL
-- **DBアクセス**: Spring Data JPA
+- **DBアクセス**: DOMA 2（doma-spring-boot-starter:1.7.0）
 
 ### フロントエンド
 - **言語**: TypeScript
@@ -65,9 +65,15 @@ npm run type-check
 
 ## アーキテクチャ概要
 - バックエンドはREST APIとして提供し、フロントエンドと分離したSPA構成
-- Spring Data JPAでPostgreSQLにアクセスし、TODOタスクを永続化
+- DOMA 2でPostgreSQLにアクセスし、TODOタスクを永続化。SELECT は `META-INF/com/example/todo/dao/TodoDao/*.sql` に明示的SQLを記述し、INSERT/UPDATE/DELETE はDOMAが自動生成
 - フロントエンドはFullCalendarでカレンダーUIを描画し、タスクをカレンダー上に表示
 - バックエンドAPI（`:8080`）とフロントエンド開発サーバー（`:5173`）はCORSで連携
+
+## DOMA 2 の注意点
+- `doma-processor`（アノテーションプロセッサ）のバージョンは `doma-spring-boot-starter` が依存する `doma-core` のバージョンと**必ず一致**させること（現在は両方 `2.53.1`）。不一致だと起動時に `DOMA0003` エラーが発生する
+- エンティティのフィールドはパッケージプライベート（アクセス修飾子なし）にすること。DOMAの生成メタクラス（`_Todo`）が同パッケージから直接アクセスする
+- `DaoConfig.java` で `new TodoDaoImpl(config)` を Spring Bean として登録する。`TodoDaoImpl` はコンパイル時にアノテーションプロセッサが生成する
+- DBスキーマは `schema.sql`（`CREATE TABLE IF NOT EXISTS`）で管理し、`spring.sql.init.mode=always` で毎起動時に冪等実行する
 
 ## 制約
 - 日本語で回答してください。
