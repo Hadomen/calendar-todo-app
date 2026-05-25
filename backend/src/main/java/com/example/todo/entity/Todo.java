@@ -1,34 +1,39 @@
 package com.example.todo.entity;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.seasar.doma.*;
+import org.seasar.doma.jdbc.entity.NamingType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(naming = NamingType.SNAKE_LOWER_CASE)
 @Table(name = "todos")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Todo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    @Column(nullable = false)
-    private String title;
+    String title;
 
-    private String description;
+    String description;
 
-    private LocalDate dueDate;
+    LocalDate dueDate;
 
-    @Column(nullable = false)
-    private boolean completed = false;
+    boolean completed;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(insertable = false, updatable = false)
+    LocalDateTime createdAt;
+
+    public Long getId() { return id; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public LocalDate getDueDate() { return dueDate; }
+    public boolean isCompleted() { return completed; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) { this.description = description; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
+    public void setCompleted(boolean completed) { this.completed = completed; }
 }

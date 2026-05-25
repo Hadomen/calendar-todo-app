@@ -1,7 +1,7 @@
 package com.example.todo.service;
 
+import com.example.todo.dao.TodoDao;
 import com.example.todo.entity.Todo;
-import com.example.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,24 +14,25 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class TodoService {
 
-    private final TodoRepository todoRepository;
+    private final TodoDao todoDao;
 
     public List<Todo> findAll() {
-        return todoRepository.findAll();
+        return todoDao.selectAll();
     }
 
     public List<Todo> findByDateRange(LocalDate start, LocalDate end) {
-        return todoRepository.findByDueDateBetween(start, end);
+        return todoDao.selectByDateRange(start, end);
     }
 
     public Todo findById(Long id) {
-        return todoRepository.findById(id)
+        return todoDao.selectById(id)
                 .orElseThrow(() -> new RuntimeException("Todo not found: " + id));
     }
 
     @Transactional
     public Todo create(Todo todo) {
-        return todoRepository.save(todo);
+        todoDao.insert(todo);
+        return todo;
     }
 
     @Transactional
@@ -41,11 +42,13 @@ public class TodoService {
         todo.setDescription(updated.getDescription());
         todo.setDueDate(updated.getDueDate());
         todo.setCompleted(updated.isCompleted());
-        return todoRepository.save(todo);
+        todoDao.update(todo);
+        return todo;
     }
 
     @Transactional
     public void delete(Long id) {
-        todoRepository.deleteById(id);
+        Todo todo = findById(id);
+        todoDao.delete(todo);
     }
 }
