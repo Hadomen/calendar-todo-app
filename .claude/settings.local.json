@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(scoop --version)",
+      "Bash(choco --version)",
+      "Bash(java -version)",
+      "Bash(winget search *)",
+      "Bash(winget install *)",
+      "Bash(curl -L -o /tmp/gradle.zip \"https://services.gradle.org/distributions/gradle-8.12-bin.zip\" --progress-bar)",
+      "Bash(echo \"展開中...\")",
+      "Bash(unzip -q /tmp/gradle.zip -d /tmp/gradle-dist)",
+      "Bash(echo \"Wrapper を生成中...\")",
+      "Bash(export JAVA_HOME)",
+      "Bash(cd /c/ClaudeProject/backend)",
+      "Read(//tmp/gradle-dist/**)",
+      "Read(//tmp/gradle-dist/gradle-8.12/**)",
+      "Bash(mkdir -p /tmp/gradle-wrapper-gen)",
+      "Bash(echo \"rootProject.name = 'temp'\")",
+      "Read(//tmp/**)",
+      "Bash(/tmp/gradle-dist/gradle-8.12/bin/gradle wrapper *)",
+      "Bash(echo \"--- 生成ファイル ---\")",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradlew /c/ClaudeProject/backend/gradlew)",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradlew.bat /c/ClaudeProject/backend/gradlew.bat)",
+      "Bash(cp /tmp/gradle-wrapper-gen/gradle/wrapper/gradle-wrapper.jar /c/ClaudeProject/backend/gradle/wrapper/gradle-wrapper.jar)",
+      "Bash(chmod +x /c/ClaudeProject/backend/gradlew)",
+      "Bash(rm -rf /tmp/gradle-dist /tmp/gradle.zip /tmp/gradle-wrapper-gen)",
+      "Bash(npm install *)"
+    ]
+  }
+}
