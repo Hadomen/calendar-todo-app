@@ -24,7 +24,11 @@
       "Bash(cp /tmp/gradle-wrapper-gen/gradle/wrapper/gradle-wrapper.jar /c/ClaudeProject/backend/gradle/wrapper/gradle-wrapper.jar)",
       "Bash(chmod +x /c/ClaudeProject/backend/gradlew)",
       "Bash(rm -rf /tmp/gradle-dist /tmp/gradle.zip /tmp/gradle-wrapper-gen)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
